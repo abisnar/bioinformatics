@@ -39,18 +39,24 @@ def main():
     delta = 8
     # Affine Penalty
     eps = 3
+    proteins = read_fasta("input/uniprot-organism.fasta")
 
-    recs = read_fasta("input/test.fasta")
+    results = {}
+   # i = recs[0][1]
+    with open('input/unknown.txt') as unknown_seq:
+        i =unknown_seq.read().strip()
+    
+    for b in range(0,len(proteins)):
+        j = proteins[b][1]
 
-    i = recs[0][1]
-    j = recs[1][1]
-
-    # Compute Alignment Scores:
-    score = global_alignment_affinity_gap(i, j, BLOSUM62(), delta, eps)
-
-    print score
-    with open('output/scores.txt', 'w') as output:
-        output.write(str(score) + '\n' + str(recs[0][0]) + '\n' + str(recs[1][0]))
+        # Compute Alignment Scores:
+        score = global_alignment_affinity_gap(i, j, BLOSUM62(), delta, eps)
+        
+        results[proteins[b][0]] = int(score)
+        print str(b) + ' ' + proteins[b][0] + ' ' + score
+    
+        with open('output/scores.txt', 'w') as output:
+           output.write(str(results))
 
 if __name__ == '__main__':
     main()
