@@ -1,0 +1,3 @@
+('sp|O43918|AIRE_HUMAN', '2111')
+('sp|P40227|TCPZ_HUMAN', '-99')
+('sp|P23759|PAX7_HUMAN', '-99')
