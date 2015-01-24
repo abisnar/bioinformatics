@@ -1,3 +1,5 @@
-('sp|O43918|AIRE_HUMAN', '2111')
-('sp|P40227|TCPZ_HUMAN', '-99')
-('sp|P23759|PAX7_HUMAN', '-99')
+The Top 3 Global Alignment scores for d = 8 and e = 3 are:
+
+Name: AIRE_HUMAN , Score: 2111
+Name: SAMD1_HUMAN , Score: -17
+Name: YB011_HUMAN , Score: -22
