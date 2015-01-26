@@ -1,4 +1,5 @@
 #!/bin/bash/env python
+# Allan Bisnar
 from scripts import *
 import re
 
@@ -50,16 +51,19 @@ def main():
 
     # Access the unknown Protein
     with open('input/unknown.txt') as unknown_seq:
-        i = unknown_seq.read().strip()
+        seq1 = unknown_seq.read().strip()
 
     # Calculating the Global Alignment score of the unknown to all UniProt Proteins
-    result_scores = [global_alignment_affinity_gap(i, j, BLOSUM62(),delta,eps) for j in sequences]
+    result_scores = [global_alignment_affinity_gap(seq1, seq2, BLOSUM62(), delta, eps) for seq2 in sequences]
+    print "======================================"
+    print "Finished Computing all Alignment Scores."
+    print "Top 3 Scores are stored in /output/top3_scores.txt"
 
     # Make a new list that contains the ID with Corresponding Alignment Score
     result_list = zip(ids, result_scores)
 
     # Sort the list by decreasing Alignment Scores
-    sorted_by_max_scores = sorted(result_list, key=lambda tup:tup[1])[::-1]
+    sorted_by_max_scores = sorted(result_list, key=lambda tup: tup[1])[::-1]
 
     # Store the Top 3 Candidates
     top3 = sorted_by_max_scores[0:3]

@@ -1,6 +1,6 @@
 #/usr/bin/env python
 # Allan Bisnar
-from math import log10
+from math import log
 
 ## Compute similarity matrix for RNA based on the following alignment of
 ## 2 rRNA rnauences
@@ -8,7 +8,7 @@ from math import log10
 rna1 = "-----CCACCCGGCGAUAGUGAGCGGGCAACACCCGGACUCAUCUCGAACCCGGAAGUAAAG-UCCCCUACGUUGGUAAG-GCA--GUGGGAUCCGCAAGGGCCUGCAGCCUUGCCAAGCUGGGAUGGACAUU"
 rna2 = "GAUGGGUGCACGGUCAUAGCGGUGGAGUU-UACCCGGUCUCAUCCCGAACCCGGAAGUCAAGCCCUCCUGCGUC-UGUCCC-AAUACUGUGGUACGAGAGUCCACGGGAACGGCGGUCACUGUG-C-------"
 
-match = zip(rna1,rna2)
+match = zip(rna1, rna2)
 no_gap_match = []
 
 for elem in match:
@@ -96,7 +96,7 @@ print "Total sum of q is : "+str(qA + qC + qU + qG)
 def match_scores(pab,qa,qb):
 	numerator = float(pab)
 	denom = float(qa*qb)
-	return log10(numerator/denom)
+	return log(numerator/denom,2)
 
 sAA = match_scores(pAA, qA, qA)
 sAU = match_scores(pAU, qA, qU)
