@@ -6,11 +6,11 @@ def count_alignments(n, m):
     S[1][0][0] = 1
 
     # Initialize the edges with the given penalties.
-    for i in range(1, n):
+    for i in range(1, n+1):
         S[0][i][0] = 1
         
         S[2][i][0] = 0
-    for j in range(1, m):
+    for j in range(1, m+1):
         
         S[0][0][j] = 0
 
@@ -18,8 +18,8 @@ def count_alignments(n, m):
         S[2][0][j] = 1
 
     # Compute the Counts for M_ij, Gx, and Gy matrices.
-    for j in range(1, m):
-        for i in range(1, n):
+    for j in range(1, m+1):
+        for i in range(1, n+1):
             g_x = [S[0][i-1][j], S[1][i-1][j]]
             S[0][i][j] = sum(g_x)
 
@@ -32,7 +32,7 @@ def count_alignments(n, m):
     # Get the Total Counts
     matrix_scores = [S[0][i][j], S[1][i][j], S[2][i][j]]
     total_score = sum(matrix_scores)
-    print "The alignment count is : " + str(total_score)
+    print "The alignment count for n =", n," and m =", m," is : " + str(total_score)
     return total_score
 
 count_alignments(1,1) # gap to gap
@@ -43,3 +43,4 @@ count_alignments(5,5)
 count_alignments(6,6)
 count_alignments(7,7)
 count_alignments(8,8)
+count_alignments(2,3)

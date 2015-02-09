@@ -27,8 +27,9 @@ def global_alignment_affinity_gap(n, m, scoring_matrix, d, e):
             g_y = [S[2][i][j-1] - e, S[1][i][j-1] - d]
             S[2][i][j] = max(g_y)
 
-            m_ij = [S[0][i][j], S[1][i-1][j-1] + scoring_matrix[n[i-1], m[j-1]], S[2][i][j]]
+            m_ij = [S[0][i][j],S[2][i][j], S[1][i-1][j-1] + scoring_matrix[n[i-1], m[j-1]]]
             S[1][i][j] = max(m_ij)
+
 
     # Get the maximum score
     matrix_scores = [S[0][i][j], S[1][i][j], S[2][i][j]]
@@ -44,20 +45,23 @@ def main():
     eps = 3
 
     # List of all 1017 Uniprot Proteins in Tuples by (id,seq)
-    proteins = read_fasta("input/uniprot-organism.fasta")
+    #proteins = read_fasta("input/uniprot-organism.fasta")
+    proteins = read_fasta("input/test.fasta")
 
     sequences = get_seqs_from_records(proteins)
     ids = get_seq_id_from_records(proteins)
 
     # Access the unknown Protein
-    with open('input/unknown.txt') as unknown_seq:
-        seq1 = unknown_seq.read().strip()
+    #with open('input/unknown.txt') as unknown_seq:
+    #    seq1 = unknown_seq.read().strip()
+
+    fasta1 = read_fasta('input/BMR1A_HUMAN.fasta')
+    seq1 = fasta1[0][1]
 
     # Calculating the Global Alignment score of the unknown to all UniProt Proteins
     result_scores = [global_alignment_affinity_gap(seq1, seq2, BLOSUM62(), delta, eps) for seq2 in sequences]
     print "======================================"
     print "Finished Computing all Alignment Scores."
-    print "Top 3 Scores are stored in /output/top3_scores.txt"
 
     # Make a new list that contains the ID with Corresponding Alignment Score
     result_list = zip(ids, result_scores)
@@ -69,7 +73,9 @@ def main():
     top3 = sorted_by_max_scores[0:3]
 
     # Print out the Top 3 Candidates in a txt file in /output/top3_scores.txt
-    with open('output/top3_scores.txt', 'w') as output:
+    path_to_output = 'output/top3_test.txt'
+    with open(path_to_output, 'w') as output:
+        print "Top 3 Scores are stored in",path_to_output,"."
         output.write("The Top 3 Global Alignment scores for d = 8 and e = 3 are:" + "\n")
         for elem in top3:
             # REGEX pattern to clean up FASTA ID to return only the Protein Name
