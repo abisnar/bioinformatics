@@ -1,0 +1,12 @@
+words = ['MAA','AAA','AAL','ALI','LIR','IRR','RRL','RLL','LLR','LRG']
+
+neighbors = [('MAA', [(13, 'MAA')]),
+             ('AAA', []),
+             ('AAL', []),
+             ('ALI', []),
+             ('LIR', [(13, 'LIR')]),
+             ('IRR', [(14, 'IRR'), (13, 'VRR')]),
+             ('RRL', [(14, 'RRL')]),
+             ('RLL', [(13, 'RLL')]),
+             ('LLR', [(13, 'LLR')]),
+             ('LRG', [(13, 'IRG'), (15, 'LRG'),(13, 'MRG')])]
