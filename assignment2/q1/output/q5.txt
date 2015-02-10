@@ -1,3 +1,7 @@
-16
--------PRTEINS
-----PRTWPSEIN-
+Index
+ACRBP Sequence
+ACRBP Start Pos
+BMP6 Start pos
+Length
+Score
+BMP6 sequence
