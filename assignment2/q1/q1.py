@@ -109,7 +109,7 @@ def main():
     for alignment in top3:
         print "\n"
         print "Index= "+str(alignment[0][0])+" Name= "+alignment[0][1]+" Score= "+str(alignment[1][0])
-        print "START POS in "+ref_id+": "+str(alignment[1][1]['ref start'])+ " START POS in "+alignment[0][1]+": "+ str(alignment[1][1]['unknown start'])
+        print "START POS in "+ref_id+": "+str(alignment[1][1]['ref start'])+ " START POS in "+alignment[0][1]+": "+ str(alignment[1][1]['unknown start'])+" LENGTH: "+str(alignment[1][1]['length'])
         print alignment[1][1]["ref seq"]
         print alignment[1][1]["unknown seq"]
         print "\n"
@@ -121,7 +121,7 @@ def main():
         for alignment in top3:
             output.writelines("\n")
             output.writelines("Index= "+str(alignment[0][0])+" Name= "+alignment[0][1]+" Score= "+str(alignment[1][0]) +"\n")
-            output.writelines("START POS in "+ref_id+": "+str(alignment[1][1]['ref start'])+ " START POS in "+alignment[0][1]+": "+ str(alignment[1][1]['unknown start']) +"\n")
+            output.writelines("START POS in "+ref_id+": "+str(alignment[1][1]['ref start'])+ " START POS in "+alignment[0][1]+": "+ str(alignment[1][1]['unknown start'])+" LENGTH: "+str(alignment[1][1]['length'])+"\n")
             output.writelines(alignment[1][1]["ref seq"] + "\n")
             output.writelines(alignment[1][1]["unknown seq"] +"\n")
             output.writelines("\n")
