@@ -11,7 +11,8 @@ def find_words(sequence):
     return word_list
 
 seq = 'MAAALIRRLLRG'
-print find_words(seq)
+s = 'SRLHMMVRRMGRVPGIKFSKEKTTWVDVVNRRLVVEKCGSTPSDTSSEDGVRRIVHLYTTSDDF'
+#print find_words(seq)
 
 alphabet = ['A', 'R', 'N', 'D', 'C', 'Q', 'E', 'G', 'H', 'I', 'L', 'K', 'M', 'F', 'P', 'S', 'T', 'W', 'Y', 'V', 'B', 'Z']
 
@@ -40,11 +41,25 @@ def find_neighborhood_words(word, threshold):
     return tally_scores
 
 words = find_words(seq)
-neighborhood_words = []
 
-for word in words:
-    neighbors = find_neighborhood_words(word,13)
-    neighborhood_words.append((word, neighbors))
+neighbors = ['MAA','LIR', 'IRR','VRR', 'RRL','RLL','LLR','IRG','LRG','MRG']
 
-print neighborhood_words
+def find_neighbors(words):
+    neighborhood_words = []
+    for word in words:
+        neighbors = find_neighborhood_words(word,13)
+        neighborhood_words.append((word, neighbors))
 
+    return neighborhood_words
+
+
+s_words = find_words(s)
+
+def find_hits(s_words,neighbors):
+    words = []
+    for i in xrange(0,len(s_words)):
+        if s_words[i] in neighbors:
+            words.append((s_words[i],i))
+    return words
+
+hit_spots = find_hits(s_words,neighbors)

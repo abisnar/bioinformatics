@@ -10,3 +10,29 @@ neighbors = [('MAA', [(13, 'MAA')]),
              ('RLL', [(13, 'RLL')]),
              ('LLR', [(13, 'LLR')]),
              ('LRG', [(13, 'IRG'), (15, 'LRG'),(13, 'MRG')])]
+
+s = ['SRL', 'RLH', 'LHM', 'HMM', 'MMV', 'MVR', 'VRR', 'RRM', 'RMG', 'MGR',
+	 'GRV', 'RVP', 'VPG', 'PGI', 'GIK', 'IKF', 'KFS', 'FSK', 'SKE', 'KEK', 
+	 'EKT', 'KTT', 'TTW', 'TWV', 'WVD', 'VDV', 'DVV', 'VVN', 'VNR', 'NRR', 
+	 'RRL', 'RLV', 'LVV', 'VVE', 'VEK', 'EKC', 'KCG', 'CGS', 'GST', 'STP', 
+	 'TPS', 'PSD', 'SDT', 'DTS', 'TSS', 'SSE', 'SED', 'EDG', 'DGV', 'GVR', 
+	 'VRR', 'RRI', 'RIV', 'IVH', 'VHL', 'HLY', 'LYT', 'YTT', 'TTS', 'TSD', 
+	 'SDD', 'DDF']
+
+
+hitspots = [('VRR', 6), ('RRL', 30), ('VRR', 50)]
+
+
+neighbour1_r = ['VRR','RRL','RLL','LLR']
+s1_r 		 = ['VRR','RRM','RMG','MGR']
+
+
+neighbour2_r = ['RRL','RLL','LLR','IRG']
+			   ['RRL','RLL','LLR','LRG']
+			   ['RRL','RLL','LLR','MRG']
+s2_r		 = ['RRL','RLV','LVV','VVE']
+
+
+
+neighbour3_r = ['VRR','RRL','RLL','LLR']
+s3_r 		 = ['VRR','RRI','RIV','IVH']
