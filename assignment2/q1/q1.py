@@ -5,38 +5,39 @@ from scripts import *
 
 def local_alignment_linear_gap(v, w, scoring_matrix, d):
     # Returns the local alignment score of v and w with constant gap penalty
-    # Initialize the matrices.
-    S = [[0 for j in xrange(len(w)+1)] for i in xrange(len(v)+1)]
+
+    # Initialize the matrix.
+    F = [[0 for j in xrange(len(w)+1)] for i in xrange(len(v)+1)]
     backtrack = [["-" for j in xrange(len(w)+1)] for i in xrange(len(v)+1)]
     max_val = 0
     max_ij = (0, 0)
 
     # Fill in the scores for the lower, middle, upper, and backtrack matrices.
-    for i in xrange(1, len(v)+1):
-        for j in xrange(1, len(w)+1):
-            row_scores = S[i-1][j] - d
-            col_scores = S[i][j-1] - d
-            dia_scores = S[i-1][j-1] + scoring_matrix[v[i-1], w[j-1]]
+    for j in xrange(1, len(w)+1):
+        for i in xrange(1, len(v)+1):
+            row_scores = F[i-1][j] - d
+            col_scores = F[i][j-1] - d
+            dia_scores = F[i-1][j-1] + scoring_matrix[v[i-1], w[j-1]]
 
-            scores = [0, row_scores, col_scores, dia_scores]
-            S[i][j] = max(scores)
-            if S[i][j] > max_val:
-                max_val = S[i][j]
+            scores = [dia_scores, row_scores, col_scores, 0]
+            F[i][j] = max(scores)
+            if F[i][j] > max_val:
+                max_val = F[i][j]
                 max_ij = (i, j)
 
-            ## 0 scores denoted by gapX, gapY, match, zero
-            if S[i][j] == dia_scores:
+            ##  Scores denoted by gapX, gapY, match, zero
+            if F[i][j] == dia_scores:
                 backtrack[i][j] = "match"
-            elif S[i][j] == row_scores:
+            elif F[i][j] == row_scores:
                 backtrack[i][j] = "gapY"
-            elif S[i][j] == col_scores:
+            elif F[i][j] == col_scores:
                 backtrack[i][j] = "gapX"
             else:
                 backtrack[i][j] = "zero"
 
    # Termination
-    i = max_ij[0]
-    j = max_ij[1]
+    i = max_ij[0] # location of the max i value
+    j = max_ij[1] # location of the max j value
 
 
     # Backtrack to the edge of the matrix starting from the max val
@@ -97,6 +98,7 @@ def main():
     result_scores = [local_alignment_linear_gap(seq1, seq2, BLOSUM62(), 4) for seq2 in unknown_seq]
 
     all_results = zip(id_index, result_scores)
+
     #sort by max_scores
     sorted_by_max_scores = sorted(all_results, key=lambda tup: tup[1][0])[::-1]
 
@@ -116,6 +118,7 @@ def main():
 
     # Print out the Top 3 Candidates in a txt file in /output/top3_scores.txt
     path_to_output = 'output/top3_results.txt'
+
     print "printing top 3 to: "+path_to_output
     with open(path_to_output, 'w') as output:
         for alignment in top3:
