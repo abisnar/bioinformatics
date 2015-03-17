@@ -1,0 +1,34 @@
+digraph finite_state_machine {
+	rankdir=LR;
+	node [shape = doublecircle]; B E; size="20";
+	node [shape = circle]; size ="5"
+	B -> A [ label = "1/n" ];
+	B -> C [ label = "1/n" ];
+	B -> T [ label = "1/n" ];
+	B -> G [ label = "1/n" ];
+	A -> A [ label = "1/n" ];
+	C -> C [ label = "1/n" ];
+	T -> T [ label = "1/n" ];
+	G -> G [ label = "1/n" ];
+	
+	A -> T [ label = "1/n" ];
+	A -> C [ label = "1/n" ];
+	A -> G [ label = "1/n" ];
+	A -> E [ label = "1/n" ];
+
+	C -> T [ label = "1/n" ];
+	C -> A [ label = "1/n" ];
+	C -> G [ label = "1/n" ];
+	C -> E [ label = "1/n" ];
+
+
+	G -> T [ label = "1/n" ];
+	G -> C [ label = "1/n" ];
+	G -> A [ label = "1/n" ];
+	G -> E [ label = "1/n" ];
+
+	T -> A [ label = "1/n" ];
+	T -> C [ label = "1/n" ];
+	T -> G [ label = "1/n" ];
+	T -> E [ label = "1/n" ];
+}
