@@ -34,6 +34,31 @@ def local_alignment_linear_gap(v, w, scoring_matrix, d):
             else:
                 backtrack[i][j] = "zero"
 
+    backtrack_sequence = ''
+
+    while(1):
+        if (backtrack[max_ji[0]][max_ji[1]] == "S"):
+            max_ji[0] = 0
+
+        elif (backtrack[max_ji[0]][max_ji[1]] == "a"):
+            max_ji[0] = 1
+            max_ji[1] = max_ji[1] -1
+            backtrack_sequence = "a"+ backtrack_sequence
+
+        elif (backtrack[max_ji[0]][max_ji[1]] == "b"):
+            max_ji[0] = 2
+            max_ji[1] = max_ji[1] -1
+            backtrack_sequence = "b"+ backtrack_sequence
+
+        elif (backtrack[max_ji[0]][max_ji[1]] == "c"):
+            max_ji[0] = 3
+            max_ji[1] = max_ji[1] -1
+            backtrack_sequence = "c"+ backtrack_sequence
+
+        else:
+            break
+
+
    # Termination
     i = max_ij[0]
     j = max_ij[1]
