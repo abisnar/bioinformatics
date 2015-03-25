@@ -301,23 +301,21 @@ def main():
 	ref_id = ref_protein[0]
 	seq1 = ref_protein[1]
 
-	seq2 = proteins[251][1]
-	#unknown_seq = get_seqs_from_records(unknown_proteins)
+	unknown_proteins = proteins[509:998]
+	unknown_seq = get_seqs_from_records(unknown_proteins)
 	# unknown_id = get_seq_id_from_records(unknown_proteins)
 	# index = list(xrange(998))
 	# id_index = zip(index, unknown_id)
 
 
-
-
-	result_scores = viterbi_local_alignment(seq1,seq2, sig, e, t, n, QPMATRIX(),QDICT())
+	result_scores = [viterbi_local_alignment(seq1,seq2, sig, e, t, n, QPMATRIX(),QDICT()) for seq2 in unknown_seq]
 	# all_results = zip(id_index, result_scores)
 
 	# sorted_by_max_scores = sorted(all_results, key=lambda tup: tup[1][0])[::-1]
 
 	# top3 = sorted_by_max_scores[0:3]
 
-	path_to_output = 'output/top3_results.txt'
+	# path_to_output = 'output/top3_results.txt'
 
 	# for alignment in top3:
 	# 	print "\n"
