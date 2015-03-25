@@ -277,7 +277,7 @@ def viterbi_local_alignment(seq1, seq2, delta, epsilon, tao, eta, qp_matrix, q_d
 					"top_seq" : t_aligned,
 					"bot_seq" : b_aligned, 
 					"ref_start" : seq1_start, 
-					"unk_start" :seq2_start }
+					"unk_start" : seq2_start }
 
 	print alignment
 	return (log_prob, alignment)
@@ -297,12 +297,12 @@ def main():
 	ref_id = ref_protein[0]
 	seq1 = ref_protein[1]
 
-	unknown = read_fasta("input/test.fasta")
+	#unknown = read_fasta("input/test.fasta")
 
-	unknown_proteins = unknown[0:998]
+	unknown_proteins = proteins[0:998]
 	unknown_seq = get_seqs_from_records(unknown_proteins)
 	unknown_id = get_seq_id_from_records(unknown_proteins)
-	index = list(xrange(998))
+	index = list(xrange(1,1000))
 	id_index = zip(index, unknown_id)
 
 
@@ -322,7 +322,7 @@ def main():
 	for alignment in top3:
 		print "\n"
 		print "Index= "+str(alignment[0][0])+" Name= "+alignment[0][1]+"ln Prob= "+str(alignment[1][0])
-		print "START POS in "+ref_id+": "+str(alignment[1][1]['ref_start'])+ " START POS in "+alignment[0][1]+": "+ str(alignment[1][1]['ref_start'])+" LENGTH: "+str(alignment[1][1]['length'])
+		print "START POS in "+ref_id+": "+str(alignment[1][1]['ref_start'])+ " START POS in "+alignment[0][1]+": "+ str(alignment[1][1]['unk_start'])+" LENGTH: "+str(alignment[1][1]['length'])
 		print alignment[1][1]["top_seq"]
 		print alignment[1][1]["bot_seq"]
 		print "\n"
@@ -333,7 +333,7 @@ def main():
 		for alignment in top3:
 			output.writelines("\n")
 			output.writelines("Index= "+str(alignment[0][0])+" Name= "+alignment[0][1]+"ln Prob= "+str(alignment[1][0]) +"\n")
-			output.writelines("START POS in "+ref_id+": "+str(alignment[1][1]['ref_start'])+ " START POS in "+alignment[0][1]+": "+ str(alignment[1][1]['ref_start'])+" LENGTH: "+str(alignment[1][1]['length']) +"\n")
+			output.writelines("START POS in "+ref_id+": "+str(alignment[1][1]['ref_start'])+ " START POS in "+alignment[0][1]+": "+ str(alignment[1][1]['unk_start'])+" LENGTH: "+str(alignment[1][1]['length']) +"\n")
 			output.writelines(alignment[1][1]["top_seq"]+"\n")
 			output.writelines(alignment[1][1]["bot_seq"]+"\n")
 			output.writelines("\n")
