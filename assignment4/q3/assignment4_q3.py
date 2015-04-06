@@ -121,6 +121,7 @@ def viterbi_local_alignment(seq1, seq2, delta, epsilon, tao, eta, qp_matrix, q_d
 				ry2_vals = [ss4_ry2, ry2_ry2]
 
 				V[7][i][j] = log(q_dict[seq2[j-1]]) + max(ry2_vals)
+				
 				if max(ry2_vals) == ry2_ry2:
 					B[7][i][j] = 7
 				else:
@@ -192,81 +193,94 @@ def viterbi_local_alignment(seq1, seq2, delta, epsilon, tao, eta, qp_matrix, q_d
 	#Termination
 	log_prob = V[12][m][n]
 
-	print log_prob
+	#print log_prob
 
 
-	# v_aligned = ''
-	# w_aligned = ''
+	v_aligned = ''
+	w_aligned = ''
 
-	# k = B[12][m][n]
-	# i = m
-	# j = n
+	k = B[12][m][n]
+	i = m
+	j = n
 	
-	# while k != 0:
-	# 	if k == 1:
-	# 		k = B[k][m][n]
-	# 		m -= 1
+	while k != 0:
 
-	# 	elif B[k][m][n] == 2:
-	# 		k = B[k][m][n]
-	# 		n -=1
+		#RX1
+		if k == 1:
+			k = B[k][m][n]
+			m -= 1
+		#RY1
+		elif k == 2:
+			k = B[k][m][n]
+			n -=1
+		#M
+		elif k == 3:
+			k = B[k][m][n]
+			i -= 1
+			j -= 1
+			m -= 1
+			n -= 1
+			v_aligned += seq1[i]
+			w_aligned += seq2[j]
+		#X
+		elif k == 4:
+			k = B[k][m][n]
+			i -= 1
+			m -= 1
+			v_aligned += seq1[i]
+			w_aligned += '-'
+		#Y
+		elif k == 5:
+			k = B[k][m][n]
+			j -= 1
+			n -= 1
+			v_aligned += '-'
+			w_aligned += seq2[j]
+		#RX1
+		elif k == 6:
+			k = B[k][m][n]
+			i -= 1
+			m -= 1
 
-	# 	elif B[k][m][n] == 3:
-	# 		k = B[k][m][n]
-	# 		i -= 1
-	# 		j -= 1
-	# 		m -= 1
-	# 		n -= 1
-	# 		v_aligned += seq1[i]
-	# 		w_aligned += seq2[j]
+		elif k == 7:
+			k = B[k][m][n]
+			j -= 1
+			n -= 1
+
+		elif k == 8:
+			k = B[k][m][n]
+
+		elif k == 9:
+			k = B[k][m][n]
+
+		elif k == 10:
+			k = B[k][m][n]
+
+		elif k == 11:
+			k = B[k][m][n]
 		
-	# 	elif B[k][m][n] == 4:
-	# 		k = B[k][m][n]
-	# 		i -= 1
-	# 		m -= 1
-	# 		v_aligned += seq1[i]
-	# 		w_aligned += '-'
+		elif k == 12:
+			k = B[k][m][n]
+		else:
+			break
 
-	# 	elif B[k][m][n] == 5:
-	# 		k = B[k][m][n]
-	# 		j -= 1
-	# 		n -= 1
-	# 		v_aligned += '-'
-	# 		w_aligned += seq2[j]
+	v_aligned = v_aligned[::-1]
+	w_aligned = w_aligned[::-1]
 
-	# 	elif B[k][m][n] == 6:
-	# 		k = B[k][m][n]
-	# 		i -= 1
-	# 		m -= 1
+	seq1_start = i + 1
+	seq2_start = j + 1
+	t_aligned = w_aligned[0:60]
+	b_aligned = v_aligned[0:60]
+	len_aligned = max(len(v_aligned), len(w_aligned))
 
-	# 	elif B[k][m][n] == 7:
-	# 		k = B[k][m][n]
-	# 		j -= 1
-	# 		n -= 1
+	alignment = {"length": len_aligned, 
+					"top_seq" : t_aligned,
+					"bot_seq" : b_aligned, 
+					"ref_start" : seq1_start, 
+					"unk_start" : seq2_start }
 
-	# 	elif B[k][m][n] == 8:
-	# 		k = B[k][m][n]
-
-	# 	elif B[k][m][n] == 9:
-	# 		k = B[k][m][n]
-
-	# 	elif B[k][m][n] == 10:
-	# 		k = B[k][m][n]
-
-	# 	elif B[k][m][n] == 11:
-	# 		k = B[k][m][n]
-		
-	# 	elif B[k][m][n] == 12:
-	# 		k = B[k][m][n]
-	# 	else:
-	# 		break
-
-	# v_aligned = v_aligned[::-1]
-	# w_aligned = w_aligned[::-1]
-
-	# print w_aligned[0:60], j
-	# print v_aligned[0:60], i
-	# print max(len(v_aligned), len(w_aligned))
+	print alignment
+	return (log_prob, alignment)
 
 	# ## V[0] = B, V[1] = RX1, V[2] =RY1, V[3] = M, V[4] = X, V[5] = Y, V[6] = RX2 ,
 	# ## V[7] = RY2, V[8] = S1, V[9] = S2, V[10] = S3, V[11] = S4 V[12] = E
@@ -278,57 +292,51 @@ def main():
 	t = 0.002
 	n = 0.12
 
-	# proteins = read_fasta("input/test.fasta")
-	# ref_protein = proteins[0]
-	# ref_id = ref_protein[0]
-
-	# seq1 = ref_protein[1]
-	# test_protein = proteins[1]
-	# seq2 = test_protein[1]
-	# unknown_proteins = proteins[1:3]
-	# unknown_seq = get_seqs_from_records(unknown_proteins)
-	# unknown_id = get_seq_id_from_records(unknown_proteins)
-	# index = list(xrange(3))
-	# id_index = zip (index, unknown_id)
-
-	# all_results = viterbi_local_alignment(seq1,seq2, sig, e, t, n, QPMATRIX(),QDICT())
-
-	# result_scores = [viterbi_local_alignment(seq1,seq2, sig, e, t, n, QPMATRIX(),QDICT()) for seq2 in unknown_seq]
-	# all_results = zip (id_index, result_scores)
-
 	proteins = read_fasta("input/uniprot-organism.fasta")
 	ref_protein = proteins[999]
 	ref_id = ref_protein[0]
 	seq1 = ref_protein[1]
 
-	unknown_proteins = proteins[509:998]
+	#unknown = read_fasta("input/test.fasta")
+
+	unknown_proteins = proteins[0:998]
 	unknown_seq = get_seqs_from_records(unknown_proteins)
-	# unknown_id = get_seq_id_from_records(unknown_proteins)
-	# index = list(xrange(998))
-	# id_index = zip(index, unknown_id)
+	unknown_id = get_seq_id_from_records(unknown_proteins)
+	index = list(xrange(1,1000))
+	id_index = zip(index, unknown_id)
 
 
 	result_scores = [viterbi_local_alignment(seq1,seq2, sig, e, t, n, QPMATRIX(),QDICT()) for seq2 in unknown_seq]
-	# all_results = zip(id_index, result_scores)
+	
+	all_results = zip(id_index, result_scores)
 
-	# sorted_by_max_scores = sorted(all_results, key=lambda tup: tup[1][0])[::-1]
+	# # Sort by max scores
+	sorted_by_max_scores = sorted(all_results, key=lambda tup: tup[1][0])[::-1]
 
-	# top3 = sorted_by_max_scores[0:3]
+	top3 = sorted_by_max_scores[0:3]
 
-	# path_to_output = 'output/top3_results.txt'
+	print(top3)
 
-	# for alignment in top3:
-	# 	print "\n"
-	# 	print "Index= "+str(alignment[0][0])+" Name= "+alignment[0][1]+" Score= "+str(alignment[1][0])
-	# 	print "\n"
+	path_to_output = 'output/top3_results.txt'
 
-	# print "printing top 3 to: "+path_to_output
+	for alignment in top3:
+		print "\n"
+		print "Index= "+str(alignment[0][0])+" Name= "+alignment[0][1]+"ln Prob= "+str(alignment[1][0])
+		print "START POS in "+ref_id+": "+str(alignment[1][1]['ref_start'])+ " START POS in "+alignment[0][1]+": "+ str(alignment[1][1]['unk_start'])+" LENGTH: "+str(alignment[1][1]['length'])
+		print alignment[1][1]["top_seq"]
+		print alignment[1][1]["bot_seq"]
+		print "\n"
 
-	# with open(path_to_output, 'w') as output:
-	# 	for alignment in top3:
-	# 		output.writelines("\n")
-	# 		output.writelines("Index= "+str(alignment[0][0])+" Name= "+alignment[0][1]+" Score= "+str(alignment[1][0]) +"\n")
-	# 		output.writelines("\n")
+	print "printing top 3 to: "+path_to_output
+
+	with open(path_to_output, 'w') as output:
+		for alignment in top3:
+			output.writelines("\n")
+			output.writelines("Index= "+str(alignment[0][0])+" Name= "+alignment[0][1]+"ln Prob= "+str(alignment[1][0]) +"\n")
+			output.writelines("START POS in "+ref_id+": "+str(alignment[1][1]['ref_start'])+ " START POS in "+alignment[0][1]+": "+ str(alignment[1][1]['unk_start'])+" LENGTH: "+str(alignment[1][1]['length']) +"\n")
+			output.writelines(alignment[1][1]["top_seq"]+"\n")
+			output.writelines(alignment[1][1]["bot_seq"]+"\n")
+			output.writelines("\n")
 
 if __name__ == '__main__':
     main()
