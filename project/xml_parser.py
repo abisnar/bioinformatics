@@ -103,9 +103,10 @@ def main():
 
     with open(str(wpcm_res[0])+".txt",'w') as output:
         output.writelines("\n")
+        output.writelines("XML File: "+str(input_file)+"\n")
+        output.writelines("Consensus Sequence: "+wpcm_res[0]+"\n")
         output.writelines("WPCM Scoring\n")
         output.writelines("----------------\n")
-        output.writelines("Consensus Sequence: "+wpcm_res[0]+"\n")
         output.writelines("A: "+ str( wpcm_res[1][ wpcm_res[0]][0])+"\n")
         output.writelines("C: "+ str( wpcm_res[1][ wpcm_res[0]][1])+"\n")
         output.writelines("G: "+ str( wpcm_res[1][ wpcm_res[0]][2]) +"\n")
@@ -114,7 +115,6 @@ def main():
         output.writelines("\n")
         output.writelines("PPM Scoring\n")
         output.writelines("----------------\n")
-        output.writelines("Consensus Sequence: "+ppm_res[0]+"\n")
         output.writelines("A: "+ str( ppm_res[1][ ppm_res[0]][0])+"\n")
         output.writelines("C: "+ str( ppm_res[1][ ppm_res[0]][1])+"\n")
         output.writelines("G: "+ str( ppm_res[1][ ppm_res[0]][2]) +"\n")
@@ -123,7 +123,6 @@ def main():
         output.writelines("\n")
         output.writelines("PWM Scoring\n")
         output.writelines("----------------\n")
-        output.writelines("Consensus Sequence: "+pwm_res[0]+"\n")
         output.writelines("A: "+ str( pwm_res[1][ pwm_res[0]][0])+"\n")
         output.writelines("C: "+ str( pwm_res[1][ pwm_res[0]][1])+"\n")
         output.writelines("G: "+ str( pwm_res[1][ pwm_res[0]][2]) +"\n")
